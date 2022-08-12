@@ -1,0 +1,5 @@
+version: "3.9"
+services:
+  pulumi-nodejs:
+    image: pulumi-nodejs:latest
+    build: .
