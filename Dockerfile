@@ -1,5 +1,7 @@
 FROM node:14.19.3-alpine
 
+RUN apk add --update make
+
 RUN wget -O pulumi.tar.gz https://get.pulumi.com/releases/sdk/pulumi-v3.37.2-linux-x64.tar.gz \
     && tar -zxf pulumi.tar.gz \
     && mkdir -p /usr/local/pulumi \
