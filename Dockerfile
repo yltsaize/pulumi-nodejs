@@ -21,7 +21,10 @@ RUN cd /usr/local/bin/ && \
     ln -s nats-box nats-sub && \
     ln -s nats-box nats-req && \
     ln -s nats-box nats-rply
+
+
 # pulumi resource 
+RUN apk add --update make
 RUN wget -O pulumi.tar.gz https://get.pulumi.com/releases/sdk/pulumi-v3.37.2-linux-x64.tar.gz \
     && tar -zxf pulumi.tar.gz \
     && mkdir -p /usr/local/pulumi \
