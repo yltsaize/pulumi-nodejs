@@ -34,5 +34,5 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
-          push: true
+          load: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:latest
