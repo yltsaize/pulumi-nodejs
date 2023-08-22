@@ -2,7 +2,6 @@
 ARG NODE_VERSION=14.19.3
 ARG GOLANG_VERSION=1.18
 ARG PULUMI_VERSION=3.43.1
-ARG MINIO_PROVIDER_VERSION=0.13.2
 ARG NATS_PROVIDER_VERSION=0.6.0
 
 # nats-box go builder
@@ -22,7 +21,6 @@ RUN go install github.com/nats-io/stan.go/examples/stan-bench@latest
 FROM node:${NODE_VERSION}-alpine
 # https://stackoverflow.com/questions/53681522/share-variable-in-multi-stage-dockerfile-arg-before-from-not-substituted
 ARG PULUMI_VERSION
-ARG MINIO_PROVIDER_VERSION
 ARG NATS_PROVIDER_VERSION
 
 # pulumi resource
@@ -35,11 +33,16 @@ RUN wget -O pulumi.tar.gz https://get.pulumi.com/releases/sdk/pulumi-v${PULUMI_V
     && rm -rf pulumi/
 
 # minio
-RUN mkdir -p /usr/local/pulumi/plugins/resource-minio-v${MINIO_PROVIDER_VERSION} \
-    && cd /usr/local/pulumi/plugins/resource-minio-v${MINIO_PROVIDER_VERSION} \
-    && wget -O pulumi-resource-minio.tar.gz https://github.com/pulumi/pulumi-minio/releases/download/v${MINIO_PROVIDER_VERSION}/pulumi-resource-minio-v${MINIO_PROVIDER_VERSION}-linux-amd64.tar.gz \
-    && tar -zxf pulumi-resource-minio.tar.gz \
-    && rm pulumi-resource-minio.tar.gz
+RUN sh -x \
+    && for version in 0.5.0 \
+                      0.13.2; \
+       do \
+          mkdir -p /usr/local/pulumi/plugins/resource-minio-v${version}; \
+          cd /usr/local/pulumi/plugins/resource-minio-v${version}; \
+          wget -O pulumi-resource-minio.tar.gz https://github.com/pulumi/pulumi-minio/releases/download/v${version}/pulumi-resource-minio-v${version}-linux-amd64.tar.gz; \
+          tar -zxf pulumi-resource-minio.tar.gz; \
+          rm pulumi-resource-minio.tar.gz; \
+       done
 
 # nats-box
 ENV NKEYS_PATH /nsc/nkeys
