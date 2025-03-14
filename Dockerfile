@@ -35,7 +35,8 @@ RUN wget -O pulumi.tar.gz https://get.pulumi.com/releases/sdk/pulumi-v${PULUMI_V
 # minio
 RUN sh -x \
     && for version in 0.5.0 \
-                      0.13.2; \
+                      0.13.2 \
+                      0.16.3; \
        do \
           mkdir -p /usr/local/pulumi/plugins/resource-minio-v${version}; \
           cd /usr/local/pulumi/plugins/resource-minio-v${version}; \
