@@ -1,7 +1,7 @@
 # GLOBAL VARIABLES
-ARG NODE_VERSION=14.19.3
-ARG GOLANG_VERSION=1.18
-ARG PULUMI_VERSION=3.43.1
+ARG NODE_VERSION=20.9.0
+ARG GOLANG_VERSION=1.22
+ARG PULUMI_VERSION=3.148.0
 ARG NATS_PROVIDER_VERSION=0.6.0
 
 # nats-box go builder
@@ -35,7 +35,8 @@ RUN wget -O pulumi.tar.gz https://get.pulumi.com/releases/sdk/pulumi-v${PULUMI_V
 # minio
 RUN sh -x \
     && for version in 0.5.0 \
-                      0.13.2; \
+                      0.13.2 \
+                      0.16.3; \
        do \
           mkdir -p /usr/local/pulumi/plugins/resource-minio-v${version}; \
           cd /usr/local/pulumi/plugins/resource-minio-v${version}; \
